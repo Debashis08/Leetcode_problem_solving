@@ -4,6 +4,7 @@ private:
 public:
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) 
     {
+        //Solution using kahn's algorithm
         vector<int> indegree(numCourses,0);
         vector<vector<int>> adjlist(numCourses);
         for(auto ite:prerequisites)
