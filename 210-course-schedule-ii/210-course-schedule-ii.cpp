@@ -3,6 +3,7 @@ class Solution
 public:
     vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) 
     {
+        //solution using kahn's algorithm
         vector<int> indegree(numCourses,0);
         vector<vector<int>> adjlist(numCourses);
         for(auto ite:prerequisites)
