@@ -9,7 +9,7 @@ private:
         visited[u]=1;
         for(int i=0;i<graph.size();i++)
         {
-            if(visited[i]==0 && graph[u][i]==1)
+            if(i!=u && visited[i]==0 && graph[u][i]==1)
             {
                 dfs_visit(i);
             }
