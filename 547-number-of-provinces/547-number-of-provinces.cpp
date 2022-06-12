@@ -7,16 +7,9 @@ private:
     void dfs_visit(int u)
     {
         visited[u]=1;
-        // for(auto i:graph[u])
-        // {
-        //     if(i==1 && visited[i]==0)
-        //     {
-        //         dfs_visit(i);
-        //     }
-        // }
         for(int i=0;i<graph.size();i++)
         {
-            if(i!=u && visited[i]==0 && graph[u][i]==1)
+            if(visited[i]==0 && graph[u][i]==1)
             {
                 dfs_visit(i);
             }
