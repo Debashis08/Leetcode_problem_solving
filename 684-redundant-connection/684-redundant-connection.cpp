@@ -4,7 +4,6 @@ private:
     map<int,vector<int>> adjlist;
     vector<int> visited;
     vector<int> parent;
-    // vector<int> res;
     bool dfs_find_cycle(int curr,int par)
     {
         visited[curr]=1;
@@ -20,9 +19,11 @@ private:
             }
             else if(i!=par)
             {
-                // res.push_back(i);
-                // res.push_back(curr);
                 return true;
+            }
+            else
+            {
+                //nothing need to be done in the case when we find the parent of this current vertex
             }
         }
         return false;
