@@ -1,42 +1,63 @@
-class Solution{
-public:
-    int color[2001];
-    vector<int> Adj[2001];
-    bool IsVisited[2001];
-    bool bfs(int i)
+class Solution {
+private:
+    map<int,vector<int>> adjlist;
+    vector<bool> visited;
+    vector<int> color;
+    queue<int> q;
+    bool bfs_color_graph(int u)
     {
-        if(color[i] == -1)color[i] = 0;
-        queue<int> q1;
-        q1.push(i);
-        while(!q1.empty())
+        if(color[u]==0)
         {
-            int a = q1.front();
-            q1.pop();
-            int col = color[a];
-            for(auto x : Adj[a])
+            color[u]=1;
+        }
+        q.push(u);
+        while(q.empty()!=true)
+        {
+            int temp=q.front();
+            q.pop();
+            int cur_col=color[temp];
+            for(auto i:adjlist[temp])
             {
-                if(color[x] == col)return false;
-                if(IsVisited[x])continue;
-                color[x] = 1 xor col;
-                q1.push(x);
-                IsVisited[x] = true;
+                if(color[i]==cur_col)
+                {
+                    return false;
+                }
+                if(visited[i])
+                {
+                    continue;
+                }
+                if(cur_col==1)
+                {
+                    color[i]=2;
+                }
+                else
+                {
+                    color[i]=1;
+                }
+                    visited[i]=true;
+                    q.push(i);
             }
         }
         return true;
     }
+public:
     bool possibleBipartition(int n, vector<vector<int>>& dislikes) {
-        for(int i = 0 ; i <= 2000 ; i++){color[i] = -1;IsVisited[i]=false;}
-        for(auto x : dislikes)
+        visited.resize(n+1,false);
+        color.resize(n+1,0);
+        for(auto i:dislikes)
         {
-            Adj[x[0]].push_back(x[1]);
-            Adj[x[1]].push_back(x[0]);
+            adjlist[i[0]].push_back(i[1]);
+            adjlist[i[1]].push_back(i[0]);
         }
-        for(int i = 1 ; i <= n ; i++)
+        for(int i=1;i<=n;i++)
         {
-            if(!IsVisited[i])
+            if(visited[i]==false)
             {
-                IsVisited[i] = true;
-                if(!bfs(i))return false;
+                visited[i]=true;
+                if(bfs_color_graph(i)==false)
+                {
+                    return false;
+                }
             }
         }
         return true;
