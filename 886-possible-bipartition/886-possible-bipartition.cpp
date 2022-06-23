@@ -22,20 +22,19 @@ private:
                 {
                     return false;
                 }
-                if(visited[i]==true)
+                if(visited[i]==false)
                 {
-                    continue;
-                }
-                if(cur_col==1)
-                {
-                    color[i]=2;
-                }
-                else
-                {
-                    color[i]=1;
-                }
                     visited[i]=true;
                     q.push(i);
+                    if(cur_col==1)
+                    {
+                        color[i]=2;
+                    }
+                    else
+                    {
+                        color[i]=1;
+                    }
+                }
             }
         }
         return true;
