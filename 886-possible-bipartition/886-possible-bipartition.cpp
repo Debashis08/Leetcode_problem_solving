@@ -22,7 +22,7 @@ private:
                 {
                     return false;
                 }
-                if(visited[i])
+                if(visited[i]==true)
                 {
                     continue;
                 }
