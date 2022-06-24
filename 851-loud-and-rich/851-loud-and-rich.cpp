@@ -3,10 +3,10 @@ private:
     int n;
     map<int,vector<int>> adjlist;
     vector<int> quiet_obj;
-    vector<bool> visited;
     vector<int> res;
     void run_bfs(int u,int q)
     {
+        vector<bool> visited(n,false);
         visited[u]=true;
         queue<int> q_obj;
         q_obj.push(u);
@@ -34,14 +34,12 @@ public:
     vector<int> loudAndRich(vector<vector<int>>& richer, vector<int>& quiet) {
         n=quiet.size();
         quiet_obj=quiet;
-        visited.resize(n,false);
         for(auto i:richer)
         {
             adjlist[i[1]].push_back(i[0]);
         }
         for(int i=0;i<n;i++)
         {
-            fill(visited.begin(),visited.end(),false);
             run_bfs(i,quiet_obj[i]);
         }
         return res;
