@@ -1,54 +1,48 @@
 class Solution {
-public:
-    
-    bool bfs(int sc , int de , vector<int>ans[] ,int n)
+private:
+    int n;
+    map<int,vector<int>> adjlist;
+    vector<bool> res;
+    bool run_bfs(int src,int dst)
     {
-       vector<bool>vis(n,false);
-        
-        queue<int>q;
-        vis[sc]=true;
-        
-        q.push(sc);
-        
-        while(!q.empty())
+        vector<bool> visited(n,false);
+        visited[src]=true;
+        queue<int> q;
+        q.push(src);
+        while(q.empty()!=true)
         {
-            int h = q.front();
+            int temp=q.front();
             q.pop();
-            
-            for(auto &x : ans[h])
+            for(auto i:adjlist[temp])
             {
-                if(x==de)
+                if(i==dst)
                 {
                     return true;
                 }
-                if(!vis[x])
+                if(visited[i]==false)
                 {
-                    q.push(x);
-                    vis[x]=true;
+                    q.push(i);
+                    visited[i]=true;
                 }
+                
             }
         }
         return false;
-        
     }
-    
-    vector<bool> checkIfPrerequisite(int n, vector<vector<int>>& pre, vector<vector<int>>& queries) {
+public:
+    vector<bool> checkIfPrerequisite(int numCourses, vector<vector<int>>& prerequisites, vector<vector<int>>& queries) {
+        n=numCourses;
         
+        // res.resize(queries.size(),false);
         
-        vector<int>ans[1007];
-        vector<bool>res;
-        //vector<bool>vis(n,false);
-        
-        for(auto &x: pre)
+        for(auto i:prerequisites)
         {
-           ans[x[0]].push_back(x[1]);
+            adjlist[i[0]].push_back(i[1]);
         }
-        
-        for(int i=0; i< queries.size(); i++)
+        for(auto i=0;i<queries.size();i++)
         {
-            vector<int>temp = queries[i];
-            
-            if(bfs(temp[0],temp[1],ans,n))
+            vector<int> temp=queries[i];
+            if(run_bfs(temp[0],temp[1])==true)
             {
                 res.push_back(true);
             }
@@ -57,10 +51,6 @@ public:
                 res.push_back(false);
             }
         }
-        
-        
         return res;
-        
-       
     }
 };
