@@ -2,10 +2,10 @@ class Solution {
 private:
     int n;
     map<int,vector<int>> adjlist;
+    vector<bool> visited;
     vector<bool> res;
     bool run_bfs(int src,int dst)
     {
-        vector<bool> visited(n,false);
         visited[src]=true;
         queue<int> q;
         q.push(src);
@@ -31,7 +31,9 @@ private:
     }
 public:
     vector<bool> checkIfPrerequisite(int numCourses, vector<vector<int>>& prerequisites, vector<vector<int>>& queries) {
-        n=numCourses;        
+        n=numCourses;
+        res.resize(queries.size(),false);
+        visited.resize(n);
         for(auto i:prerequisites)
         {
             adjlist[i[0]].push_back(i[1]);
@@ -39,14 +41,8 @@ public:
         for(auto i=0;i<queries.size();i++)
         {
             vector<int> temp=queries[i];
-            if(run_bfs(temp[0],temp[1])==true)
-            {
-                res.push_back(true);
-            }
-            else
-            {
-                res.push_back(false);
-            }
+            fill(visited.begin(),visited.end(),false);
+            res[i]=run_bfs(temp[0],temp[1]);
         }
         return res;
     }
