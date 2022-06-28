@@ -31,10 +31,7 @@ private:
     }
 public:
     vector<bool> checkIfPrerequisite(int numCourses, vector<vector<int>>& prerequisites, vector<vector<int>>& queries) {
-        n=numCourses;
-        
-        // res.resize(queries.size(),false);
-        
+        n=numCourses;        
         for(auto i:prerequisites)
         {
             adjlist[i[0]].push_back(i[1]);
