@@ -1,5 +1,5 @@
 class Solution {
-    map<int,vector<int>> adjlist;
+    // map<int,vector<int>> adjlist;
     vector<int> indegree;
     vector<int> res;
 public:
@@ -7,7 +7,7 @@ public:
         indegree.resize(n,0);
         for(auto i:edges)
         {
-            adjlist[i[0]].push_back(i[1]);
+            // adjlist[i[0]].push_back(i[1]);
             indegree[i[1]]++;
         }
         for(int i=0;i<n;i++)
