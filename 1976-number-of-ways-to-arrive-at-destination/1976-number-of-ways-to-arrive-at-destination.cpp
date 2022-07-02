@@ -1,43 +1,60 @@
-#define ll long long int
-ll mod=1e9+7;
+#define lli long long int
+lli mod=1e9+7;
+
 class Solution {
+    map<lli,vector<pair<lli,lli>>> adjlist;
+    vector<lli> distance;
+    vector<lli> dp;
+    priority_queue<pair<lli,lli>,vector<pair<lli,lli>>,greater<pair<lli,lli>>> pq;
 public:
     int countPaths(int n, vector<vector<int>>& roads) {
-        map<ll,vector<pair<ll,ll>>> mp;
-        
-        for(auto road:roads)
+        distance.resize(n,LONG_MAX);
+        dp.resize(n,-1);
+        for(auto i:roads)
         {
-            mp[road[0]].push_back({road[1],road[2]});
-            mp[road[1]].push_back({road[0],road[2]});
+            adjlist[i[0]].push_back({i[1],i[2]});
+            adjlist[i[1]].push_back({i[0],i[2]});
         }
-        priority_queue<pair<ll,ll>,vector<pair<ll,ll>>,greater<pair<ll,ll>>> pq;
-        vector<ll> dis(n,LONG_MAX);
-        vector<ll> ways(n,0);
-        pq.push({0,0});
-        ways[0]=1;
-        dis[0]=0;
-        while(!pq.empty())
+        pq.push({0,0}); //distance,node_val
+        distance[0]=0;
+        dp[0]=1;
+        while(pq.empty()!=true)
         {
-            pair<ll,ll> ele=pq.top();
+            // pair<lli,lli> temp=pq.top();
+            // pq.pop();
+            // for(auto i:adjlist[temp.second])
+            // {
+            //     if(distance[i.first]>distance[temp.second]+i.second)
+            //     {
+            //         distance[i.first]=distance[temp.second]+i.second;
+            //         dp[i.first]=dp[temp.second]%mod;
+            //         pq.push({distance[i.first],i.first});
+            //     }
+            //     else if(distance[i.first]==distance[temp.second]+i.second)
+            //     {
+            //         dp[i.first]=(dp[i.first]%mod + dp[temp.second]%mod)%mod;
+            //     }
+            // }
+            pair<lli,lli> ele=pq.top();
             pq.pop();
-            ll last_dis=ele.first;
-            ll last_node=ele.second;
-            for(auto pr:mp[last_node])
+            lli last_dis=ele.first;
+            lli last_node=ele.second;
+            for(auto pr:adjlist[last_node])
             {
-                ll dest=pr.first;
-                ll time=pr.second;
-                if(last_dis+time<dis[dest])
+                lli dest=pr.first;
+                lli time=pr.second;
+                if(last_dis+time<distance[dest])
                 {
-                    dis[dest]=last_dis+time;
-                    ways[dest]=ways[last_node]%mod;
+                    distance[dest]=last_dis+time;
+                    dp[dest]=dp[last_node]%mod;
                     pq.push({last_dis+time,dest});
                 }
-                else if(dis[dest]==time+last_dis)
+                else if(distance[dest]==time+last_dis)
                 {
-                    ways[dest]=(ways[dest]%mod + ways[last_node]%mod)%mod;
+                    dp[dest]=(dp[dest]%mod + dp[last_node]%mod)%mod;
                 }
             }
         }
-        return ways[n-1];
+        return dp[n-1];
     }
 };
