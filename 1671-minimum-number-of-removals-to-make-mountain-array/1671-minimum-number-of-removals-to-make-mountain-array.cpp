@@ -32,7 +32,6 @@ public:
                 ans=max(ans,lis[i]+lds[i]-1);
             }
         }
-        cout<<ans<<endl;
         return (nums.size()-ans);
     }
 };
