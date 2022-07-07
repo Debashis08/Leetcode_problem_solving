@@ -21,9 +21,7 @@ public:
             }
 
         }
-        
-        cout<<res<<endl;
-        
-        return (double(res)/double(k));
+                
+        return (res/double(k));
     }
 };
