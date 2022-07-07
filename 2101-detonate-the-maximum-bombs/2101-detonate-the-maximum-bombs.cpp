@@ -41,17 +41,6 @@ public:
         
         for(int i=0;i<bombs.size();i++)
         {
-            cout<<i<<"-->";
-            for(auto i:adjlist[i])
-            {
-                cout<<i<<" ";
-            }
-            cout<<endl;
-        }
-        cout<<endl;
-        
-        for(int i=0;i<bombs.size();i++)
-        {
             fill(visited.begin(),visited.end(),false);
             count=0;
             dfs(i);
